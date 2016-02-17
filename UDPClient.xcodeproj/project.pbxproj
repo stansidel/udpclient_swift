@@ -12,6 +12,7 @@
 		F6589E351C744EC600AB029C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6589E331C744EC600AB029C /* Main.storyboard */; };
 		F6589E371C744EC600AB029C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6589E361C744EC600AB029C /* Assets.xcassets */; };
 		F6589E3A1C744EC600AB029C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6589E381C744EC600AB029C /* LaunchScreen.storyboard */; };
+		F6589E431C74500600AB029C /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6589E421C74500600AB029C /* CocoaAsyncSocket.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		F6589E361C744EC600AB029C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F6589E391C744EC600AB029C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F6589E3B1C744EC600AB029C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6589E421C74500600AB029C /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaAsyncSocket.framework; path = Carthage/Build/iOS/CocoaAsyncSocket.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6589E431C74500600AB029C /* CocoaAsyncSocket.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +41,7 @@
 		F6589E231C744EC600AB029C = {
 			isa = PBXGroup;
 			children = (
+				F6589E421C74500600AB029C /* CocoaAsyncSocket.framework */,
 				F6589E2E1C744EC600AB029C /* UDPClient */,
 				F6589E2D1C744EC600AB029C /* Products */,
 			);
@@ -74,6 +78,7 @@
 				F6589E281C744EC600AB029C /* Sources */,
 				F6589E291C744EC600AB029C /* Frameworks */,
 				F6589E2A1C744EC600AB029C /* Resources */,
+				F6589E411C744F4B00AB029C /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -130,6 +135,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F6589E411C744F4B00AB029C /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/CocoaAsyncSocket.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F6589E281C744EC600AB029C /* Sources */ = {
@@ -248,6 +271,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = UDPClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stansidel.UDPClient;
@@ -259,6 +286,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = UDPClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.stansidel.UDPClient;
