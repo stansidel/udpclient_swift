@@ -9,7 +9,7 @@
 import UIKit
 import CocoaAsyncSocket
 
-class ViewController: UIViewController, GCDAsyncUdpSocketDelegate {
+class ViewController: UIViewController, GCDAsyncUdpSocketDelegate, UITextFieldDelegate {
     @IBOutlet weak var hostTextField: UITextField!
     @IBOutlet weak var localPortTextField: UITextField!
     @IBOutlet weak var remotePortTextField: UITextField!
@@ -46,7 +46,7 @@ class ViewController: UIViewController, GCDAsyncUdpSocketDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
+        loadDefaults()
     }
     
     deinit {
@@ -81,6 +81,8 @@ class ViewController: UIViewController, GCDAsyncUdpSocketDelegate {
         }
         socket?.sendData(str.dataUsingEncoding(NSUTF8StringEncoding), toHost: host, port: port, withTimeout: 2, tag: 0)
         log("Data sent: \(str)")
+        self.view.endEditing(true)
+        saveDefaults()
     }
     
     func udpSocket(sock: GCDAsyncUdpSocket!, didReceiveData data: NSData!, fromAddress address: NSData!, withFilterContext filterContext: AnyObject!) {
@@ -89,6 +91,43 @@ class ViewController: UIViewController, GCDAsyncUdpSocketDelegate {
             return
         }
         log("Data received: \(stringData)")
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    private func loadDefaults() {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        if let host = userDefaults.stringForKey("host") {
+            hostTextField.text = host
+        }
+        if let localPort = userDefaults.stringForKey("localPort") {
+            localPortTextField.text = localPort
+        }
+        if let remotePort = userDefaults.stringForKey("remotePort") {
+            remotePortTextField.text = remotePort
+        }
+        if let message = userDefaults.stringForKey("message") {
+            messageTextField.text = message
+        }
+    }
+    
+    private func saveDefaults() {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        userDefaults.setObject(hostTextField.text, forKey: "host")
+        userDefaults.setObject(localPortTextField.text, forKey: "localPort")
+        userDefaults.setObject(remotePortTextField.text, forKey: "remotePort")
+        userDefaults.setObject(messageTextField.text, forKey: "message")
+        userDefaults.synchronize()
+    }
+    
+    // MARK: - UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        sendPacket(textField)
+        return true
     }
 
 }
